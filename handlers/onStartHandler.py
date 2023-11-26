@@ -9,8 +9,8 @@ from aiogram.enums import ParseMode
 from datetime import datetime, timedelta
 
 from Scheduler import Scheduler
-from keyboards.configKeyboard import *
-from keyboards.menuKeyboard import getMenuKeyboard
+from keyboards.inlineKeyboards import *
+from keyboards.startMenuKeyboard import getMenuKeyboard
 from everyDaySchedule import sendScheduleOnTime
 from formattingSchedule import *
 

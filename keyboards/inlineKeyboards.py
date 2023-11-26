@@ -3,6 +3,8 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from Scheduler import Scheduler
 
+################### On start ##################
+
 def facultyKeybouard(data: Scheduler):
     schedule = data.getfacultyDictionary()
     builder = InlineKeyboardBuilder()
@@ -37,6 +39,8 @@ def groupKeyboard(data: Scheduler):
         ))
     builder.adjust(4)
     return builder
+
+####################### Professor #####################
 
 def DivisionKeybouard(data: Scheduler):
     schedule = data.getfacultyDictionary()
@@ -77,6 +81,7 @@ def professorKeyboard(data: Scheduler):
     builder.adjust(2)
     return builder
 
+################### Classroom ###################
 
 def korpusKeybouard(data: Scheduler):
     schedule = data.getKorpusList()

@@ -5,11 +5,11 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 import shelve
 from datetime import datetime, timedelta
 
-from keyboards.menuChooseScheduleKeyboard import *
-from keyboards.menuKeyboard import getMenuKeyboard
+from keyboards.scheduleMenuKeyboard import *
+from keyboards.startMenuKeyboard import getMenuKeyboard
 from formattingSchedule import *
-import handlers.sched_handlers.professor as professor
-from keyboards.configKeyboard import *
+import handlers.sched_handlers.professorMenuHandler as professorMenuHandler
+from keyboards.inlineKeyboards import *
 
 router = Router()
 data = Scheduler()

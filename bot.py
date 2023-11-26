@@ -8,9 +8,9 @@ from datetime import datetime, timedelta
 import locale
 
 import bot_config
-from handlers import scheduleMenu, startHandler, menu
-import handlers.sched_handlers.professor as professor
-import handlers.sched_handlers.classroom as classroom
+from handlers import onStartHandler, scheduleMenuHandler, startMenuHandler
+import handlers.sched_handlers.professorMenuHandler as professorMenuHandler
+import handlers.sched_handlers.classroomMenuHandler as classroomMenuHandler
 from clearDataBase import clearDataBase
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
@@ -27,8 +27,8 @@ async def main():
         seconds=int(timedelta(days=4).total_seconds()),
     )
     scheduler.start()
-    dp.include_router(startHandler.router)
-    dp.include_routers(menu.router, scheduleMenu.router, professor.router, classroom.router)
+    dp.include_router(onStartHandler.router)
+    dp.include_routers(startMenuHandler.router, scheduleMenuHandler.router, professorMenuHandler.router, classroomMenuHandler.router)
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
     
