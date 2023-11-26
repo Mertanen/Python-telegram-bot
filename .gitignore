@@ -1,5 +1,7 @@
-.vscode/
-__pycache__/
-bot_config.py
-**/__pycache__/
-*.pyc
+*.md
+/bot_config.py
+.md
+.pyc
+*.log
+*/__init__.py
+**/pycache__
