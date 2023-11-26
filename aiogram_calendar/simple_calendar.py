@@ -41,7 +41,7 @@ class SimpleCalendar:
                         day=1).pack()
                 ),
                 InlineKeyboardButton(
-                    text=f'{calendar.month_name[month]} {str(year)}',
+                    text=f'{str(year)} {calendar.month_name[month]} ',
                     callback_data=ignore_callback.pack()
                 ),
                 InlineKeyboardButton(

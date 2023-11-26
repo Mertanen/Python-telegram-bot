@@ -10,7 +10,7 @@ import datetime
 import locale as _locale
 from itertools import repeat
 
-_locale.setlocale(_locale.LC_ALL, 'ru_RU')
+_locale.setlocale(_locale.LC_ALL, "ru_RU.utf8")
 
 __all__ = ["IllegalMonthError", "IllegalWeekdayError", "setfirstweekday",
            "firstweekday", "isleap", "leapdays", "weekday", "monthrange",

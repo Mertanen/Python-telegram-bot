@@ -6,7 +6,6 @@ from aiogram.types import Message
 data = Scheduler()
 TimeTableMain = ['8:30 – 10:00', '10:10 – 11:40', '12:00 – 13:30', '13:40 – 15:10', '15:20 – 16:50', '17:00 – 18:30', '18:40 – 20:10', '20:15 – 21:45']
 day = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
-db = shelve.open('./db/user_data')
 
 def formatDate(date: datetime):
     return date.strftime("%d.%m.%Y")
@@ -15,12 +14,14 @@ def formatDate(date: datetime):
 
 def getScheduleOnDate(user_id, date):
     try:
+        db = shelve.open('./db/user_data', 'c')
         data.setGroupID(groupID=db[f'{user_id}'])
+        db.close()
         schedule = data.getSchedule(date=date)
         date = formatDate(date)
         text = "<b>" + f'📅{date} ({day[schedule[0]["DayWeek"]-1]})' + "</b>"
         for item in schedule:
-            text += "\n\n" + "🕮" + "<b>" + f"{item['TitleSubject']}({item['TypeLesson']})" + "</b>" + "\n" \
+            text += "\n\n" + "📖" + "<b>" + f"{item['TitleSubject']}({item['TypeLesson']})" + "</b>" + "\n" \
                 + "🕰" + "<b>" + f"{TimeTableMain[item['NumberLesson']-1]}" + "</b>" + "\n" \
                     + "👤" + f"{item['Family']} {item['Name']} {item['SecondName']}" + "\n" \
                         + '🚪' + "<b>" + f"{item['Korpus']}-{item['NumberRoom']}" + "</b>"
@@ -33,7 +34,9 @@ def getScheduleOnDate(user_id, date):
 def getScheduleOnWeek(user_id, date=datetime.now()):
     
     try:
+        db = shelve.open('./db/user_data', 'c')
         data.setGroupID(groupID=db[f'{user_id}'])
+        db.close()
         schedule = data.getSchedule(date=date, week=True)
         dateDict = {}
         for item in schedule:
@@ -45,14 +48,14 @@ def getScheduleOnWeek(user_id, date=datetime.now()):
         text = ""
         for item in dateDict.keys():
             date = formatDate(datetime.strptime(dateDict[f'{item}'][0]['DateLesson'], '%Y-%m-%d'))
-            text += "--------------------------------------------------------------------------------------------------"
+            text += "------------------------------------------------"
             text += "\n\n<b>" + f"📅{date} ({day[dateDict[f'{item}'][0]['DayWeek']-1]})" + "</b>" + "\n"
             for lesson in dateDict[item]:
-                text += "\n" + "🕮" + "<b>" + f"{lesson['TitleSubject']}({lesson['TypeLesson']})" + "</b>" + "\n" \
+                text += "\n" + "📖" + "<b>" + f"{lesson['TitleSubject']}({lesson['TypeLesson']})" + "</b>" + "\n" \
                 + "🕰" + "<b>" + f"{TimeTableMain[lesson['NumberLesson']-1]}" + "</b>" + "\n" \
                     + "👤" + f"{lesson['Family']} {lesson['Name']} {lesson['SecondName']}" + "\n" \
                         + '🚪' + "<b>" + f"{lesson['Korpus']}-{lesson['NumberRoom']}" + "</b>" + "\n\n" 
-        text += "--------------------------------------------------------------------------------------------------"
+        text += "------------------------------------------------"
         return text
     except:
         return "Расписание не найдено" 
@@ -61,13 +64,15 @@ def getScheduleOnWeek(user_id, date=datetime.now()):
 
 def getScheduleExams(user_id):
     try:
+        db = shelve.open('./db/user_data', 'c')
         data.setGroupID(groupID=db[f'{user_id}'])
+        db.close()
         data.examSchedule()
         schedule = data.getExamSchedule()
         text = str()
         for item in schedule:
             text += "<b>" + f'📅{item["DateLesson"]} ({day[item["DayWeek"]-1]})' + "</b>" + "\n" \
-                + "🕮" + "<b>" + f"{item['TitleSubject']}({item['TypeLesson']})" + "</b>" + "\n" \
+                + "📖" + "<b>" + f"{item['TitleSubject']}({item['TypeLesson']})" + "</b>" + "\n" \
                     + "🕰" + "<b>" + f"{TimeTableMain[item['NumberLesson']-1]}" + "</b>" + "\n" \
                         + "👤" + f"{item['Family']} {item['Name']} {item['SecondName']}" + "\n" \
                             + '🚪' + "<b>" + f"{item['NumberRoom']}" + "</b>" + "\n\n"
@@ -79,12 +84,14 @@ def getScheduleExams(user_id):
 
 def getProfessorDaySchedule(user_id, date):
     try:
+        db = shelve.open('./db/user_data', 'c')
         data.setProfessor(prof_id=db[f'prof_{user_id}'])
+        db.close()
         schedule = data.getProfessorSchedule(date=date)
         date = formatDate(date)
         text = "<b>" + f'📅{date} ({day[schedule[0]["DayWeek"]-1]})' + "</b>"
         for item in schedule:
-            text += "\n\n" + "🕮" + "<b>" + f"{item['TitleSubject']}({item['TypeLesson']})" + "</b>" + "\n" \
+            text += "\n\n" + "📖" + "<b>" + f"{item['TitleSubject']}({item['TypeLesson']})" + "</b>" + "\n" \
                 + "🕰" + "<b>" + f"{TimeTableMain[item['NumberLesson']-1]}" + "</b>" + "\n" \
                     + "👤" + f"{item['Family']} {item['Name']} {item['SecondName']}" + "\n" \
                         + '🚪' + "<b>" + f"{item['Korpus']}-{item['NumberRoom']}" + "</b>"
@@ -96,7 +103,9 @@ def getProfessorDaySchedule(user_id, date):
 
 def getProfessorWeekSchedule(user_id, date):
     try:
+        db = shelve.open('./db/user_data', 'c')
         data.setProfessor(prof_id=db[f'prof_{user_id}'])
+        db.close()
         schedule = data.getProfessorSchedule(date=date, week=True)
         dateDict = {}
         for item in schedule:
@@ -108,14 +117,14 @@ def getProfessorWeekSchedule(user_id, date):
         text = ""
         for item in dateDict.keys():
             date = formatDate(datetime.strptime(dateDict[f'{item}'][0]['DateLesson'], '%Y-%m-%d'))
-            text += "--------------------------------------------------------------------------------------------------"
+            text += "------------------------------------------------"
             text += "\n\n<b>" + f"📅{date} ({day[dateDict[f'{item}'][0]['DayWeek']-1]})" + "</b>" + "\n"
             for lesson in dateDict[item]:
-                text += "\n" + "🕮" + "<b>" + f"{lesson['TitleSubject']}({lesson['TypeLesson']})" + "</b>" + "\n" \
+                text += "\n" + "📖" + "<b>" + f"{lesson['TitleSubject']}({lesson['TypeLesson']})" + "</b>" + "\n" \
                 + "🕰" + "<b>" + f"{TimeTableMain[lesson['NumberLesson']-1]}" + "</b>" + "\n" \
                     + "👤" + f"{lesson['Family']} {lesson['Name']} {lesson['SecondName']}" + "\n" \
                         + '🚪' + "<b>" + f"{lesson['Korpus']}-{lesson['NumberRoom']}" + "</b>" + "\n\n" 
-        text += "--------------------------------------------------------------------------------------------------"
+        text += "------------------------------------------------"
         return text
     except:
         return "Расписание не найдено"
@@ -123,14 +132,16 @@ def getProfessorWeekSchedule(user_id, date):
 ########################################### Classroom Day Schedule ################################################ 
 
 def getClassroomOnDate(user_id, date):
-    try:   
+    try:  
+        db = shelve.open('./db/user_data', 'c')
         data.setKorpus((db[f'class_{user_id}'])[1])
         data.setClassroom(classroomNumber=(db[f'class_{user_id}'])[0])
+        db.close()
         schedule = data.getClassroomSchedule(date=date)
         date = formatDate(date)
         text = "<b>" + f'📅{date} ({day[schedule[0]["DayWeek"]-1]})' + "</b>"
         for item in schedule:
-            text += "\n\n" + "🕮" + "<b>" + f"{item['TitleSubject']}({item['TypeLesson']})" + "</b>" + "\n" \
+            text += "\n\n" + "📖" + "<b>" + f"{item['TitleSubject']}({item['TypeLesson']})" + "</b>" + "\n" \
                 + "🕰" + "<b>" + f"{TimeTableMain[item['NumberLesson']-1]}" + "</b>" + "\n" \
                     + "👤" + f"{item['Family']} {item['Name']} {item['SecondName']}" + "\n" \
                         + '🚪' + "<b>" + f"{item['Korpus']}-{item['NumberRoom']}" + "</b>"

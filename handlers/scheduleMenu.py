@@ -60,6 +60,7 @@ async def configCallback(callback: CallbackQuery):
     data.setProfessor(callback.data[2:])
     db = shelve.open('./db/user_data', 'c')
     db[f'prof_{user_id}'] = data.getProfessorID()
+    db.close()
     await callback.message.edit_text(text="Настройка завершена", reply_markup=InlineKeyboardBuilder().as_markup())
     await callback.message.answer(text="Выберите расписание", reply_markup=professorReplyKeyboard())
 
@@ -76,5 +77,6 @@ async def configCallback(callback: CallbackQuery):
     user_id = callback.from_user.id
     db = shelve.open('./db/user_data', 'c')
     db[f'class_{user_id}'] = [data.getClassroomNumber(), data.getKorpus()]
+    db.close()
     await callback.message.edit_text(text="Настройка завершена", reply_markup=InlineKeyboardBuilder().as_markup())
     await callback.message.answer(text="Выберите расписание", reply_markup=classroomReplyKeyboard())

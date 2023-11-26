@@ -10,4 +10,5 @@ router = Router()
 async def cmd(message: Message):
     db = shelve.open('./db/user_data', 'c')
     db[f"st_{message.from_user.id}"] = "CLAS"
+    db.close()
     await message.answer("Выберите дату: ", reply_markup=await SimpleCalendar().start_calendar())

@@ -48,6 +48,7 @@ async def process_simple_calendar(callback_query: CallbackQuery, callback_data: 
                 parse_mode=ParseMode.HTML
             )
             del db[f'st_{callback_query.from_user.id}']
+            db.close()
             
         elif db[f'st_{callback_query.from_user.id}'] == "PROF":
             schedule = getProfessorDaySchedule(callback_query.from_user.id, date)
@@ -56,6 +57,7 @@ async def process_simple_calendar(callback_query: CallbackQuery, callback_data: 
                 parse_mode=ParseMode.HTML
             ) 
             del db[f'st_{callback_query.from_user.id}']
+            db.close()
             
         elif db[f'st_{callback_query.from_user.id}'] == "CLAS":
             schedule = getClassroomOnDate(callback_query.from_user.id, date)
@@ -64,4 +66,5 @@ async def process_simple_calendar(callback_query: CallbackQuery, callback_data: 
                 parse_mode=ParseMode.HTML
             )
             del db[f'st_{callback_query.from_user.id}']
+            db.close()
         

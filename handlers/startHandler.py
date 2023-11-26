@@ -50,6 +50,7 @@ async def configCallback(callback: CallbackQuery):
     db = shelve.open('./db/user_data', 'c')
     data.setGroupID(callback.data[2:])
     db[f'{user_id}'] = data.getGroupID()
+    db.close()
     await callback.message.edit_text(text="Настройка конфигурации завершена", reply_markup=InlineKeyboardBuilder().as_markup())
     await callback.message.answer("Начало работы", reply_markup=getMenuKeyboard())
     scheduler = AsyncIOScheduler(timezone="Europe/Moscow")

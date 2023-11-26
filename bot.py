@@ -1,10 +1,11 @@
 import asyncio
+import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
 from aiogram.types import Message
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from datetime import datetime, timedelta
-
+import locale
 
 import bot_config
 from handlers import scheduleMenu, startHandler, menu
@@ -12,7 +13,7 @@ import handlers.sched_handlers.professor as professor
 import handlers.sched_handlers.classroom as classroom
 from clearDataBase import clearDataBase
 
-
+logging.basicConfig(filename='bot.log', level=logging.INFO)
  
 bot = Bot(token=bot_config.bot_token)
 dp = Dispatcher()   
