@@ -1,4 +1,3 @@
-from email import message
 from aiogram import Router, F
 from aiogram.enums import ParseMode
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove

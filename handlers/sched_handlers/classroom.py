@@ -1,10 +1,8 @@
 from aiogram import Router, F
-from aiogram.enums import ParseMode
-from aiogram.types import Message, CallbackQuery
-from datetime import datetime, timedelta
+from aiogram.types import Message
 
 from formattingSchedule import *
-from aiogram_calendar import simple_cal_callback, SimpleCalendar, dialog_cal_callback, DialogCalendar
+from aiogram_calendar import SimpleCalendar
 
 router = Router()
 
