@@ -3,5 +3,5 @@
 .md
 .pyc
 *.log
-*/__init__.py
-**/pycache__
+**/__init__.py
+**/__pycache__
